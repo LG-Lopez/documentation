@@ -1,0 +1,155 @@
+{
+    "metadata":{
+        "messages":{
+            "API": {
+                "format":"application/vnd.bancolombia.v3+json"
+            },
+            "AWS":{
+                "format": "application/json"
+            }
+        },
+        "mapping": {
+            "request": {
+                "from": "API",
+                "to": "AWS"
+            },
+            "response": {
+                "from": "AWS",
+                "to": "API"
+            },
+            "businessException": {
+                "from": "AWS",
+                "to": "API"
+            },
+            "systemException": {
+                "to": "API"
+            }
+        }
+    },
+    "request":{
+        "header": {
+            "from": "Body/LocationHeader/message-id",
+            "to": "Body/LocationBody/message-id",
+            "description": "Asignar el valor del campo orígen al valor del campo destino"
+        },
+        "customerDocumentType": {
+            "from": "Body/data/customerDocumentType",
+            "to": "Body/LocationQuery/documentType"
+        },
+        "customerDocumentNumber ": {
+            "from": "Body/data/customerDocumentNumber",
+            "to": "Body/LocationQuery/documentNumber"
+        },
+        "customerNickname": {
+            "from": "Body/data/customerNickname",
+            "to": "Body/LocationQuery/customerNickname"
+        },
+        "applicationProviderId": {
+            "from": "Body/data/applicationProviderId",
+            "to": "Body/LocationQuery/applicationProviderId"
+        },
+        "deviceCode": {
+            "from": "Body/data/deviceCode",
+            "to": "Body/LocationQuery/deviceCode"
+        }
+    },
+    "response":{
+        "meta":{
+            "_requestDate":{
+                "from": "Body/LocationBody/meta/_requestDate",
+                "to": "Body/meta/_requestDate"
+            },
+            "_responseSize":{
+                "from": "Body/LocationBody/meta/_requestDate",
+                "to": "Body/meta/_responseSize"
+            }
+        },
+        "data":{
+            "customerId":{
+                "from": "Body/LocationBody/data/customerId",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/customerId"
+            },
+            "customerDocumentType":{
+                "from": "Body/LocationBody/data/customerDocumentType",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/customerDocumentType"
+            },
+            "customerDocumentNumber":{
+                "from": "Body/LocationBody/data/customerDocumentNumber",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/customerDocumentNumber"
+            },
+            "customerName":{
+                "from": "Body/LocationBody/data/customerName",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/customerName",
+                "description": "true => Activo, false => Inactivo"
+            },
+            "customerLastName":{
+                "from": "Body/LocationBody/data/customerLastName",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/customerLastName"
+            },
+            "customerNickname":{
+                "from": "Body/LocationBody/data/customerNickname",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/customerNickname"
+            },
+            "customerMdmKey":{
+                "from": "Body/LocationBody/data/customerMdmKey",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/customerMdmKey"
+            }
+        },
+        "enrollment":{
+            "Id":{
+                "from": "Body/LocationBody/data/enrollment/Id",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/Id"
+            },
+            "createdTime":{
+                "from": "Body/LocationBody/data/enrollment/createdTime",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/createdTime"
+            },
+            "status":{
+                "from": "Body/LocationBody/data/enrollment/status",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/status",
+                "description": "true => Activo, false => Inactivo"
+            }
+        },
+        "device":{
+            "code":{
+                "from": "Body/LocationBody/data/enrollment/device/code",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/device/code"
+            },
+            "status":{
+                "from": "Body/LocationBody/data/enrollment/device/status",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/device/status",
+                "description": "true => Activo, false => Inactivo"
+            }
+        },
+        "application":{
+            "id":{
+                "from": "Body/LocationBody/data/enrollment/device/application/id",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/device/application/id"
+            },
+            "name":{
+                "from": "Body/LocationBody/data/enrollment/device/application/name",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/device/application/name"
+            },
+            "status":{
+                "from": "Body/LocationBody/data/enrollment/device/application/status",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/device/application/status",
+                "description": "true => Activo, false => Inactivo"
+            }
+        },
+        "categories":{
+            "id":{
+                "from": "Body/LocationBody/data/enrollment/device/application/categories[]/id",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/device/application/categories[]/id"
+            },
+            "name":{
+                "from": "Body/LocationBody/data/enrollment/device/application/categories[]/name",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/device/application/categories[]/name"
+            },
+            "status":{
+                "from": "Body/LocationBody/data/enrollment/device/application/categories[]/status",
+                "to": "Body/LocationBody/data/enrolledRetrieveResponse/enrollment/device/application/status",
+                "description": "true => Activo, false => Inactivo"
+            }
+        }
+    }  
+}

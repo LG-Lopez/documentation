@@ -1,0 +1,145 @@
+{
+    "metadata": {
+        "messages": {
+            "int": {
+                "format": "XML",
+                "namespaces": {
+                    "il": "http://grupobancolombia.com/intf/IL/esbXML/V3.0",
+                    "tns": "http://grupobancolombia.com/intf/Producto/MonedaExtranjera/ComercioExterior/GestionTransferenciasInternacionales/V2.0"
+                }
+            },
+            "swift": {
+                "format": "XML",
+                "namespaces": {
+                    "il": "http://grupobancolombia.com/intf/IL/esbXML/V3.0",
+                    "tns": "http://grupobancolombia.com/intf/algo de swift..."
+                },
+                "note": "La carga útil para swift es en formato JSON"
+            }
+        },
+        "mapping": {
+            "request": {
+                "from": "int",
+                "to": "swift"
+            },
+            "response": {
+                "from": "swift",
+                "to": "int"
+            },
+            "businessException": {
+                "from": "swift",
+                "to": "int"
+            },
+            "systemException": {
+                "to": "int"
+            }
+        }
+    },
+    "request": {
+        "header": {
+            "from": "il:esbXML/Header",
+            "to": "il:esbXML/Header",
+            "description": "Mapeo de la cabecera..."
+        },
+        "entidadQueResponde": {
+            "from": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibida/informacionTransferencia/entidadQueResponde",
+            "to": "il:esbXML/Body/procesar/locationBody/payment_status_request/from"
+        },
+        "acuerdoServicioNegocio": {
+            "from": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibida/informacionTransferencia/acuerdoServicioNegocio",
+            "to": "il:esbXML/Body/procesar/locationBody/payment_status_request/business_service"
+        },
+        "propositoDePago": {
+            "from": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibida/informacionTransferencia/propositoDePago",
+            "to": "il:esbXML/Body/procesar/locationBody/payment_status_request/update_payment_scenario"
+        },
+        "identificadorTransferencia": {
+            "from": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibida/informacionTransferencia/identificadorTransferencia",
+            "to": "il:esbXML/Body/procesar/locationBody/payment_status_request/uetr"
+        },
+        "referencia": {
+            "from": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibida/informacionTransferencia/referencia",
+            "to": "il:esbXML/Body/procesar/locationBody/payment_status_request/instruction_identification"
+        },
+        "bancoOriginador": {
+            "from": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibida/informacionTransferencia/estadoPago/bancoOriginador",
+            "to": "il:esbXML/Body/procesar/locationBody/payment_status_request/payment_status/originator"
+        },
+        "documentoCliente": {
+            "from": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibida/documentoCliente",
+            "to": "il:esbXML/Body/procesar/locationBody/payment_status_request/clientDocument",
+            "rules": "translate",
+            "description": "Se homologa en el PEQ con la tipología TIPIDENT"
+        },
+        "canal": {
+            "from": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibida/informacionTransferencia/canal",
+            "to": "il:esbXML/Header/interactionData/externalDestination",
+            "rules": "translate",
+            "description": "Se homologa en el servicio configurable UDCS_CMSTI_CATALOG"
+        }
+    },
+    "response": {
+        "header": {
+            "from": "il:esbXML/Header",
+            "to": "il:esbXML/Header",
+            "description": "Mapeo de la cabecera..."
+        },
+        "statusCode": {
+            "to": "il:esbXML/Header/responseData/status/statuscode",
+            "rules": "default value",
+            "description": "Success"
+        },
+        "network_reference": {
+            "from": "il:esbXML/Body/procesarResponse/locationBody/payment_status_response/network_reference",
+            "to": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibidaResponse/identificadorRed"
+        },
+        "status": {
+            "from": "il:esbXML/Body/procesarResponse/locationBody/payment_status_response/transaction_status/status",
+            "to": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibidaResponse/estadoTransaccion/estadoDeTransaccion"
+        },
+        "reason": {
+            "from": "il:esbXML/Body/procesarResponse/locationBody/payment_status_response/transaction_status/reason",
+            "to": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibidaResponse/estadoTransaccion/motivoEstado"
+        },
+        "verification": {
+            "to": "il:esbXML/Body/tns:confirmarEstadoTransferenciaRecibidaResponse/codigoVerificacion",
+            "rules": "default value",
+            "description": "Asignar el valor de UDP_VERIFICACION"
+        }
+    },
+    "businessException": {
+        "header": {
+            "from": "il:esbXML/Header",
+            "to": "il:esbXML/Header",
+            "description": "Mapeo de la cabecera..."
+        },
+        "statusCode": {
+            "to": "il:esbXML/Header/responseData/status/statuscode",
+            "rules": "default value",
+            "description": "BusinessException"
+        },
+        "businessException": {
+            "to": "il:esbXML/Header/responseData/status/businessException",
+            "rules": "default value",
+            "description": "businessException"
+        },
+        "code": {
+            "from": "il:esbXML/Body/procesarResponse/status/code",
+            "to": "il:esbXML/Body/tns:businessException/genericException/code",
+            "rules": "translate",
+            "description": "Muy juicioso se copia el valor y lo manda al SPR"
+        },
+        "description": {
+            "from": "il:esbXML/Body/procesarResponse/status/text",
+            "to": "il:esbXML/Body/tns:businessException/genericException/description",
+            "rules": "translate",
+            "description": "La descripción que responde el SPR"
+        }
+    },
+    "systemException": {
+        "esbXML": {
+            "from": "il:esbXML",
+            "to": "il:esbXML"
+        }
+    }
+}

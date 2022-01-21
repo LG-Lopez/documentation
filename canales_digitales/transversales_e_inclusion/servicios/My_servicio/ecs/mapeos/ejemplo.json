@@ -1,0 +1,51 @@
+{
+    "metadata": {
+        "messages": {
+            "int": {
+                "format": "XML",
+                "namespaces": {
+                    "il": "http://grupobancolombia.com/intf/IL/esbXML/V3.0",
+                    "tns": "http://grupobancolombia.com/intf/Producto/MonedaExtranjera/ComercioExterior/GestionTransferenciasInternacionales/V2.0"
+                }
+            }
+        },
+        "mapping": {
+            "request": {
+                "from": "int",
+                "to": ""
+            },
+            "response": {
+                "from": "",
+                "to": "int"
+            },
+            "systemException": {
+                "to": "int"
+            }
+        }
+    },
+    "request": {
+        "campo1": {
+            "from": "esbXML.../campo1",
+            "to": "esbXML/.../IA/campo1Proveedor",
+            "description": ""
+        },
+        "campo2": {
+            "from": ["esbXML.../campo2", "esbXML.../campo3"],
+            "to": "esbXML/.../IA/campo2Proveedor",
+            "rules": "concatenate",
+            "description": ""
+        },
+        "campo3": {
+            "from": "esbXML.../campo1/otro",
+            "to": "esbXML/.../IA/campo3Proveedor/dato[]/id",
+            "rules": "format",
+            "description": "Los valores del otro se separan por comas, cada uno forma el id de un dato"
+        }
+    },
+    "response": {
+
+    },
+    "recuperarDatosCliente": {
+        
+    }
+}
